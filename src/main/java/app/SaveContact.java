@@ -1,5 +1,7 @@
 package app;
 
+import app.style.NoScalingIcon;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,7 +9,7 @@ public class SaveContact extends JFrame {
 
     public static JPanel SaveContactPanel() {
         JPanel mainPanel = new JPanel(null);
-        
+        mainPanel.setBounds(0 ,0 , 480  ,720);
 
         SaveDetailPanel detail = new SaveDetailPanel();
         JPanel panelFullname = detail.makePanel("Fullname", "alekyan", 311);
@@ -18,6 +20,7 @@ public class SaveContact extends JFrame {
 
         //button
         JButton cancelButton = new JButton("Cancel");
+        cancelButton.setName("cancelBtn");
         cancelButton.setBounds(24, 17, 101, 24);
         cancelButton.setFont(env.pixel20);
         cancelButton.setForeground(Color.decode(env.NICE_BLUE));
@@ -31,7 +34,10 @@ public class SaveContact extends JFrame {
         doneButton.setContentAreaFilled(false);
         doneButton.setBorderPainted(false);
 
-        
+        NoScalingIcon userProfile = new NoScalingIcon(env.LoadImage("assets/user-profile-ellipse.png", 150, 150));
+        JLabel userProfileLabel = new JLabel(userProfile);
+        userProfileLabel.setBounds(148 , 60, 185, 185);
+        mainPanel.add(userProfileLabel);
 
         mainPanel.add(panelFullname);
         mainPanel.add(panelEmail);

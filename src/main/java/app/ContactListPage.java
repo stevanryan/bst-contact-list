@@ -1,5 +1,6 @@
 package app;
 
+import app.pages.ContactDetail;
 import app.style.NoScalingIcon;
 import app.style.RoundedBorder;
 
@@ -7,23 +8,45 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ContactListPage extends JFrame{
+    public static JPanel mainPanel ;
 
     public static void main(String[] args) {
         ContactListPage main = new ContactListPage();
     }
 
     public ContactListPage(){
-        JPanel mainPanel = new JPanel(null);
+        JPanel contactListPanel = contactListsPanel();
+        JPanel saveContactPanel = SaveContact.SaveContactPanel();
+        mainPanel = new JPanel(null);
+        mainPanel.add(contactListPanel);
 
-        JPanel content = contactiListsPanel();
-        mainPanel.add(content);
+        JLabel plus = (JLabel) env.FindComponents(contactListPanel, "addContactBtn");
+        plus.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mainPanel.remove(contactListPanel);
+                mainPanel.add(saveContactPanel);
+                repaint();
+                revalidate();
+            }
+        });
 
-        JPanel navBar = bottomNav();
-        mainPanel.add(navBar);
-
-
+        JButton cancelBtn = (JButton) env.FindComponents(saveContactPanel , "cancelBtn");
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.remove(saveContactPanel);
+                mainPanel.add(contactListPanel);
+                repaint();
+                revalidate();
+            }
+        });
 
         setBounds(env.WINDOW_POST_X , env.WINDOW_POST_Y , 480  ,720);
         setUndecorated(true);
@@ -33,10 +56,13 @@ public class ContactListPage extends JFrame{
     }
 
 
-    public JPanel contactiListsPanel (){
+    public static JPanel contactListsPanel (){
         JPanel mainPanel = new JPanel(null);
         mainPanel.setBackground(Color.decode(env.MAIN_COLOR));
-        mainPanel.setBounds(0 ,0 , 480  ,660);
+        mainPanel.setBounds(0 ,0 , 480  ,720);
+
+        JPanel botNav = bottomNav();
+
 
         //ListLabel
         JLabel listsLabel = new JLabel("Lists") ;
@@ -121,12 +147,12 @@ public class ContactListPage extends JFrame{
             }
         });
 
+        mainPanel.add(botNav);
         mainPanel.add(scrollPane);
-
         return mainPanel;
     }
 
-    public JPanel bottomNav(){
+    public static JPanel bottomNav(){
         JPanel nav = new JPanel(new GridLayout(0 , 1));
         nav.setBounds(0, env.FRAME_HEIGHT-60, 480  ,60);
 
@@ -134,10 +160,6 @@ public class ContactListPage extends JFrame{
         contactBtn.setBackground(Color.decode(env.MAIN_COLOR));
         contactBtn.setFont(env.pixel12);
         contactBtn.setBorder(null);
-//        JButton keypadBtn = new JButton(new NoScalingIcon(env.LoadImage("assets/keypad-black.png" , 35 , 35)));
-//        keypadBtn.setBackground(Color.decode(env.MAIN_COLOR));
-//        keypadBtn.setFont(env.pixel12);
-//        keypadBtn.setBorder(null);
         nav.add(contactBtn);
         return nav;
     }
