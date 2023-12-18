@@ -57,7 +57,7 @@ public class ContactDetail extends JFrame {
 
         // Event
         env.MouseListener(backLabel, (MouseEvent e) -> {
-            ContactListPage main = new ContactListPage(env.tree);
+            ContactListPage main = new ContactListPage();
             Main.mainFrame.dispose();
             return null;
         });

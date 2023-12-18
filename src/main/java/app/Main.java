@@ -25,6 +25,6 @@ public class Main {
             env.tree.insertContact(i);
         }
         env.tree.inOrder(env.tree.getRoot());
-         mainFrame = new ContactListPage(env.tree);
+         mainFrame = new ContactListPage();
     }
 }

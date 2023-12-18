@@ -84,7 +84,7 @@ public class SaveContact extends JFrame {
             Contact newContact = new Contact(fullNameField.getText(), mobileField.getText(), emailField.getText(), addressField.getText(), birthdayField.getText());
             env.tree.insertContact(newContact);
 
-            ContactListPage main = new ContactListPage(env.tree);
+            ContactListPage main = new ContactListPage();
             Main.mainFrame.dispose();
             return null;
         });
