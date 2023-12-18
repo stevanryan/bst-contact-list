@@ -19,6 +19,8 @@ public class env {
     public static final String NICE_RED = "#FF385C";
     public static final String NICE_BLUE = "#2E87EF";
     public static final String NICE_GRAY = "#F3F2F7";
+    public static final String SUPER_LIGHT_GRAY = "#F3F2F7";
+    public static final String BORDER_GRAY = "#EAE9EE";
     public static final String LIGHT_GRAY = "#808080";
     public static final int FRAME_WIDTH = 480, FRAME_HEIGHT = 720;
     public static final int WINDOW_POST_X = (int) (screenSize.getWidth() - FRAME_WIDTH) / 2;
@@ -41,6 +43,8 @@ public class env {
     public static final Font pixel14B = new Font("Segoe UI", Font.BOLD, 14);
     public static final Font pixel12 = new Font("Segoe UI", Font.PLAIN, 12);
     public static final Font pixel12B = new Font("Segoe UI", Font.BOLD, 12);
+    public static final Font pixel10 = new Font("Segoe UI", Font.PLAIN, 10);
+    public static final Font pixel10B = new Font("Segoe UI", Font.BOLD, 10);
     public static final Font pixel9 = new Font("Segoe UI", Font.PLAIN, 9);
     public static final Font pixel9B = new Font("Segoe UI", Font.BOLD, 9);
     public static final Font pixel8 = new Font("Segoe UI", Font.PLAIN, 8);
