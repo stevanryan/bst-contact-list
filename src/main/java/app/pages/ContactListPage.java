@@ -13,10 +13,7 @@ import javax.swing.border.Border;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.List;
 
 public class ContactListPage extends JFrame{
@@ -51,6 +48,8 @@ public class ContactListPage extends JFrame{
             }
         });
 
+
+
         setBounds(env.WINDOW_POST_X , env.WINDOW_POST_Y , 480  ,720);
         setUndecorated(true);
         setContentPane(mainPanel);
@@ -60,7 +59,6 @@ public class ContactListPage extends JFrame{
 
 
     public static JPanel contactListsPanel (){
-
         JPanel mainPanel = new JPanel(null);
         mainPanel.setBackground(Color.decode(env.MAIN_COLOR));
         mainPanel.setBounds(0 ,0 , 480  ,720);
@@ -90,6 +88,7 @@ public class ContactListPage extends JFrame{
         JTextField searchBar = new JTextField();
         searchBar.setBounds(20 , 110 , 440 , 35);
         searchBar.setBorder(new RoundedBorder(10));
+        searchBar.setName("searchBar");
         mainPanel.add(searchBar);
         JLabel searchIcon = new JLabel(new NoScalingIcon(env.LoadImage("assets/search-regular-240 (1).png" , 20 , 20)));
         searchIcon.setBounds(searchBar.getWidth()-30 , 7 , 20 , 20);
@@ -103,44 +102,31 @@ public class ContactListPage extends JFrame{
         contacts.setBorder(null);
         mainPanel.add(contacts);
 
+        searchBar.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (Character.isDigit(e.getKeyChar())) {
+                    e.consume();
+                } else if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+                    if (searchBar.getText().equals("")){
+                        contacts.removeAll();
+                        innerPanels(contacts, env.contactList);
+                        mainPanel.repaint();
+                        mainPanel.revalidate();
+                    }
+                }else {
+                    List<Contact> searchResults = env.tree.search(searchBar.getText());
+                    contacts.removeAll();
+                    innerPanels(contacts, searchResults);
+                    mainPanel.repaint();
+                    mainPanel.revalidate();
+                }
+            }
+        });
+
 
         //innerPanels
-        for (int i = 0; i < env.contactList.size(); i++) {
-            final int index = i ;
-            JPanel panel = new JPanel(null);
-            panel.setPreferredSize(new Dimension(880 ,60));
-            panel.setMaximumSize(new Dimension(880 , 60));
-            panel.setBackground(Color.decode(env.NICE_GRAY));
-            contacts.add(panel);
-
-            JLabel name = new JLabel(env.contactList.get(i).getFullName());
-            name.setBounds(10 , 12 , 200 , 32);
-            name.setFont(env.pixel18);
-
-            Border customBorder = BorderFactory.createMatteBorder(1, 0, 0, 0, Color.decode(env.DARK_COLOR));
-            panel.setBorder(customBorder);
-
-            Border customBorderTwo = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode(env.DARK_COLOR));
-
-            if ((i + 1) == env.contactList.size()) {
-                panel.setBorder(customBorderTwo);
-            }
-
-            panel.add(name);
-
-
-            if (i < env.contactList.size()-1) contacts.add(Box.createVerticalStrut(0));
-
-            env.MouseListener(panel , (MouseEvent e)->{
-                mainPanel.removeAll();
-                mainPanel.add(ContactDetail.ContactDetailPanel(env.contactList.get(index)));
-                mainPanel.repaint();
-                mainPanel.revalidate();
-                return null ;
-            });
-
-            panel.addMouseListener(new env.CursorPointerStyle(panel));
-        }
+        innerPanels(contacts , env.contactList);
 
 
         JScrollPane scrollPane = new JScrollPane(contacts);
@@ -184,6 +170,43 @@ public class ContactListPage extends JFrame{
         return mainPanel;
     }
 
+
+    public static void innerPanels (JPanel contacts , List<Contact> contactList){
+        for (int i = 0; i < contactList.size(); i++) {
+            final int index = i ;
+            JPanel panel = new JPanel(null);
+            panel.setPreferredSize(new Dimension(880 ,60));
+            panel.setMaximumSize(new Dimension(880 , 60));
+            panel.setBackground(Color.decode(env.NICE_GRAY));
+            contacts.add(panel);
+
+            JLabel name = new JLabel(contactList.get(i).getFullName());
+            name.setBounds(10 , 12 , 200 , 32);
+            name.setFont(env.pixel18);
+
+            Border customBorder = BorderFactory.createMatteBorder(1, 0, 0, 0, Color.decode(env.DARK_COLOR));
+            panel.setBorder(customBorder);
+
+            Border customBorderTwo = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode(env.DARK_COLOR));
+
+            if ((i + 1) == contactList.size()) {
+                panel.setBorder(customBorderTwo);
+            }
+            panel.add(name);
+
+            if (i < contactList.size()-1) contacts.add(Box.createVerticalStrut(0));
+
+            env.MouseListener(panel , (MouseEvent e)->{
+                mainPanel.removeAll();
+                mainPanel.add(ContactDetail.ContactDetailPanel(contactList.get(index)));
+                mainPanel.repaint();
+                mainPanel.revalidate();
+                return null ;
+            });
+
+            panel.addMouseListener(new env.CursorPointerStyle(panel));
+        }
+    }
     public static JPanel bottomNav(){
         JPanel nav = new JPanel(new GridLayout(0 , 1));
         nav.setBounds(0, env.FRAME_HEIGHT-60, 480  ,60);
