@@ -2,6 +2,9 @@ package app.classes;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class TreeContact {
 
@@ -55,6 +58,16 @@ public class TreeContact {
             else i = i.getLeftNode();
         }
         return false;
+    }
+
+    public List<Contact> inOrder(TreeNodeContact treeNode) {
+        List<Contact> contacts = new ArrayList<>();
+        if (treeNode != null) {
+            inOrder(treeNode.getLeftNode());
+            contacts.add(treeNode.getValue());
+            inOrder(treeNode.getRightNode());
+        }
+        return contacts;
     }
 
     public boolean delete(String value) {
