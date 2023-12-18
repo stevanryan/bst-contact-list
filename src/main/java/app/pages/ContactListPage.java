@@ -9,6 +9,7 @@ import app.style.RoundedBorder;
 import com.sun.source.tree.Tree;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
@@ -67,15 +68,14 @@ public class ContactListPage extends JFrame{
 
         JPanel botNav = bottomNav();
 
-
         //ListLabel
         JLabel listsLabel = new JLabel("Lists") ;
-        listsLabel.setBounds(15 , 30 , 150 , 15);
+        listsLabel.setBounds(20 , 30 , 150 , 15);
         listsLabel.setFont(env.pixel18);
         listsLabel.setForeground(Color.decode(env.NICE_BLUE));
         mainPanel.add(listsLabel);
         //PlusButton
-        JLabel plusBtn = new JLabel(new NoScalingIcon(env.LoadImage("assets/plusBtn.png", 24 , 24 )));
+        JLabel plusBtn = new JLabel(new NoScalingIcon(env.LoadImage("assets/plusBtn.png", 32 , 32 )));
         plusBtn.setBounds(env.FRAME_WIDTH - 50 , 30 , 24 , 24);
         plusBtn.setName("addContactBtn");
         mainPanel.add(plusBtn);
@@ -84,6 +84,8 @@ public class ContactListPage extends JFrame{
         contactLabel.setBounds(20 , 70 , 480 , 25);
         contactLabel.setFont(env.pixel28B);
         mainPanel.add(contactLabel);
+
+        plusBtn.addMouseListener(new env.CursorPointerStyle(plusBtn));
 
         //SearchBox
         JTextField searchBar = new JTextField();
@@ -108,23 +110,33 @@ public class ContactListPage extends JFrame{
             JPanel panel = new JPanel(null);
             panel.setPreferredSize(new Dimension(880 ,60));
             panel.setMaximumSize(new Dimension(880 , 60));
-            panel.setBackground(Color.decode(env.NICE_BLUE));
+            panel.setBackground(Color.decode(env.NICE_GRAY));
             contacts.add(panel);
 
-
             JLabel name = new JLabel(env.contactList.get(i).getFullName());
-            name.setBounds(0 , 0 , 200 , 20);
+            name.setBounds(10 , 12 , 200 , 32);
+            name.setFont(env.pixel18);
+
+            Border customBorder = BorderFactory.createMatteBorder(1, 0, 0, 0, Color.decode(env.DARK_COLOR));
+            panel.setBorder(customBorder);
+
+            Border customBorderTwo = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode(env.DARK_COLOR));
+
+            if ((i + 1) == env.contactList.size()) {
+                panel.setBorder(customBorderTwo);
+            }
+
             panel.add(name);
 
 
-            if (i < env.contactList.size()-1) contacts.add(Box.createVerticalStrut(5));
+            if (i < env.contactList.size()-1) contacts.add(Box.createVerticalStrut(0));
         }
 
 
         JScrollPane scrollPane = new JScrollPane(contacts);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(20, 165, 440, 495);
+        scrollPane.setBounds(20, 165, 440, 480);
         scrollPane.setBorder(null);
 
 
@@ -166,7 +178,7 @@ public class ContactListPage extends JFrame{
         JPanel nav = new JPanel(new GridLayout(0 , 1));
         nav.setBounds(0, env.FRAME_HEIGHT-60, 480  ,60);
 
-        JLabel contactBtn = new JLabel(new NoScalingIcon(env.LoadImage("assets/user-blue.png" , 35 , 35)));
+        JLabel contactBtn = new JLabel(new NoScalingIcon(env.LoadImage("assets/user-blue.png" , 48 , 48)));
         contactBtn.setBackground(Color.decode(env.MAIN_COLOR));
         contactBtn.setFont(env.pixel12);
         contactBtn.setBorder(null);
