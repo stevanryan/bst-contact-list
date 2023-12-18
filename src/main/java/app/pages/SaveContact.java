@@ -1,4 +1,6 @@
-package app;
+package app.pages;
+
+import app.env;
 
 import app.style.NoScalingIcon;
 
@@ -11,12 +13,11 @@ public class SaveContact extends JFrame {
         JPanel mainPanel = new JPanel(null);
         mainPanel.setBounds(0 ,0 , 480  ,720);
 
-        SaveDetailPanel detail = new SaveDetailPanel();
-        JPanel panelFullname = detail.makePanel("Fullname", "alekyan", 311);
-        JPanel panelEmail = detail.makePanel("email", "alekyan@gmail.com", 363);
-        JPanel panelMobile = detail.makePanelMobile("mobile", "08123456789", 458);
-        JPanel panelAddress = detail.makePanel("address", "Jl.Jogja", 510);
-        JPanel panelBirthday = detail.makePanel("birthday", "12 Desember 2023", 562);
+        JPanel panelFullname = SaveDetailPanel.makePanel("Fullname", "alekyan", 311);
+        JPanel panelEmail = SaveDetailPanel.makePanel("email", "alekyan@gmail.com", 363);
+        JPanel panelMobile = SaveDetailPanel.makePanelMobile("mobile", "08123456789", 458);
+        JPanel panelAddress = SaveDetailPanel.makePanel("address", "Jl.Jogja", 510);
+        JPanel panelBirthday = SaveDetailPanel.makePanel("birthday", "12 Desember 2023", 562);
 
         //button
         JButton cancelButton = new JButton("Cancel");
@@ -36,7 +37,7 @@ public class SaveContact extends JFrame {
 
         NoScalingIcon userProfile = new NoScalingIcon(env.LoadImage("assets/user-profile-ellipse.png", 150, 150));
         JLabel userProfileLabel = new JLabel(userProfile);
-        userProfileLabel.setBounds(148 , 60, 185, 185);
+        userProfileLabel.setBounds(154 , 80, 185, 185);
         mainPanel.add(userProfileLabel);
 
         mainPanel.add(panelFullname);

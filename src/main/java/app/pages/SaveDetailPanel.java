@@ -1,4 +1,6 @@
-package app;
+package app.pages;
+
+import app.env;
 
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
@@ -36,7 +38,7 @@ public class SaveDetailPanel {
         return panel;
     }
 
-    public JPanel makePanelMobile(String title, String content, int yPos) {
+    public static JPanel makePanelMobile(String title, String content, int yPos) {
         JPanel panel = new JPanel(null);
         // panel putih
         panel.setBounds(0, yPos, 480, 51);

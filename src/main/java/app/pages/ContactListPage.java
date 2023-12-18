@@ -1,5 +1,6 @@
-package app;
+package app.pages;
 
+import app.env;
 import app.pages.ContactDetail;
 import app.style.NoScalingIcon;
 import app.style.RoundedBorder;

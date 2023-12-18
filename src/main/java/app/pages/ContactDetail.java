@@ -40,11 +40,11 @@ public class ContactDetail extends JFrame {
         JPanel addressPanel = makePanel("address", "123 Main Street Anytown, CA 12345 USA");
         JPanel birthDatePanel = makePanel("birth date", "July 3, 1962");
 
-        fullNamePanel.setBounds(20, 210, 428, 64);
-        phoneNumberPanel.setBounds(20, 290, 428, 64);
-        emailPanel.setBounds(20, 370, 428, 64);
-        addressPanel.setBounds(20, 450, 428, 64);
-        birthDatePanel.setBounds(20, 530, 428, 64);
+        fullNamePanel.setBounds(20, 210, 440, 64);
+        phoneNumberPanel.setBounds(20, 290, 440, 64);
+        emailPanel.setBounds(20, 370, 440, 64);
+        addressPanel.setBounds(20, 450, 440, 64);
+        birthDatePanel.setBounds(20, 530, 440, 64);
 
         panel.add(fullNamePanel);
         panel.add(phoneNumberPanel);
