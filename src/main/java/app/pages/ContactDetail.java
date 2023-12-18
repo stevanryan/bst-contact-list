@@ -138,6 +138,21 @@ public class ContactDetail extends JFrame {
             return null;
         });
 
+        env.ActionListener(saveButton, (ActionEvent e) -> {
+
+            contact.setFullName(fullNameField.getText());
+            contact.setPhoneNumber(phoneNumberField.getText());
+            contact.setEmail(emailField.getText());
+            contact.setAddress(addressField.getText());
+            contact.setBirthDate(birthdateField.getText());
+
+            ContactListPage main = new ContactListPage();
+            Main.mainFrame.dispose();
+
+            return null;
+        });
+
+
         panel.add(updateButton);
         panel.add(deleteButton);
         panel.add(saveButton);
