@@ -1,5 +1,6 @@
 package app.pages;
 
+import app.classes.Contact;
 import app.classes.TreeContact;
 import app.env;
 import app.pages.ContactDetail;
@@ -15,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class ContactListPage extends JFrame{
     public static JPanel mainPanel ;
@@ -57,6 +59,8 @@ public class ContactListPage extends JFrame{
 
 
     public static JPanel contactListsPanel (TreeContact tree){
+        tree.inOrder(tree.getRoot());
+        System.out.println(tree.size());
         JPanel mainPanel = new JPanel(null);
         mainPanel.setBackground(Color.decode(env.MAIN_COLOR));
         mainPanel.setBounds(0 ,0 , 480  ,720);
@@ -100,14 +104,20 @@ public class ContactListPage extends JFrame{
 
 
         //innerPanels
-        for (int i = 0; i < tree.getSize(); i++) {
+        for (int i = 0; i < env.contactList.size(); i++) {
             JPanel panel = new JPanel(null);
             panel.setPreferredSize(new Dimension(880 ,60));
             panel.setMaximumSize(new Dimension(880 , 60));
             panel.setBackground(Color.decode(env.NICE_BLUE));
             contacts.add(panel);
 
-            if (i < tree.getSize()-1) contacts.add(Box.createVerticalStrut(5));
+
+            JLabel name = new JLabel(env.contactList.get(i).getFullName());
+            name.setBounds(0 , 0 , 200 , 20);
+            panel.add(name);
+
+
+            if (i < env.contactList.size()-1) contacts.add(Box.createVerticalStrut(5));
         }
 
 

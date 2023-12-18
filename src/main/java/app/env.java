@@ -1,13 +1,16 @@
 package app;
 
+import app.classes.Contact;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.function.Function;
 
 
 public class env {
-
+    public static java.util.List<Contact> contactList = new ArrayList<>();
     public static Cursor handCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
     public static Cursor defaultCursor = Cursor.getDefaultCursor();
     public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

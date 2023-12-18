@@ -1,5 +1,6 @@
 package app.classes;
 
+import app.env;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -27,24 +28,24 @@ public class TreeContact {
         } else {
             TreeNodeContact baru = new TreeNodeContact(value);
             TreeNodeContact i = root;
-            int index = 0;
             while (true) {
-                if (i.getValue().getFullName().charAt(index) >= baru.getValue().getFullName().charAt(index)) {
-                    if (i.getLeftNode() != null) i = i.getLeftNode();
-                    else {
+                if (i.getValue().getFullName().toLowerCase().compareTo(baru.getValue().getFullName().toLowerCase()) >= 0) {
+                    if (i.getLeftNode() != null) {
+                        i = i.getLeftNode();
+                    } else {
                         i.setLeftNode(baru);
                         size++;
                         break;
                     }
                 } else {
-                    if (i.getRightNode() != null) i = i.getRightNode();
-                    else {
+                    if (i.getRightNode() != null) {
+                        i = i.getRightNode();
+                    } else {
                         i.setRightNode(baru);
                         size++;
                         break;
                     }
                 }
-                index++;
             }
         }
     }
@@ -60,14 +61,12 @@ public class TreeContact {
         return false;
     }
 
-    public List<Contact> inOrder(TreeNodeContact treeNode) {
-        List<Contact> contacts = new ArrayList<>();
+    public void inOrder(TreeNodeContact treeNode) {
         if (treeNode != null) {
             inOrder(treeNode.getLeftNode());
-            contacts.add(treeNode.getValue());
+            env.contactList.add(treeNode.getValue());
             inOrder(treeNode.getRightNode());
         }
-        return contacts;
     }
 
     public boolean delete(String value) {
