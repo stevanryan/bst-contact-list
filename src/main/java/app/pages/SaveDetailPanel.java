@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 public class SaveDetailPanel {
 
-    public static JPanel makePanel(String title, String content, int yPos) {
+    public static JPanel makePanel(String title, int yPos) {
         JPanel panel = new JPanel(null);
         // panel putih
         panel.setBounds(0, yPos, 480, 51);
@@ -26,6 +26,17 @@ public class SaveDetailPanel {
 
         // value label
         JTextField contentValue = new JTextField();
+        if (title.equals("full name")) {
+            contentValue.setName("fullName");
+        } else if (title.equals("email")) {
+            contentValue.setName("email");
+        } else if (title.equals("mobile")) {
+            contentValue.setName("mobile");
+        } else if (title.equals("address")) {
+            contentValue.setName("address");
+        } else if (title.equals("birthday")) {
+            contentValue.setName("birthday");
+        }
         contentValue.setBackground(Color.decode(env.MAIN_COLOR));
         contentValue.setBorder(null);
         contentValue.setFont(env.pixel16);
@@ -38,7 +49,7 @@ public class SaveDetailPanel {
         return panel;
     }
 
-    public static JPanel makePanelMobile(String title, String content, int yPos) {
+    public static JPanel makePanelMobile(String title, int yPos) {
         JPanel panel = new JPanel(null);
         // panel putih
         panel.setBounds(0, yPos, 480, 51);
