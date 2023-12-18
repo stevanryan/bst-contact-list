@@ -1,11 +1,17 @@
 package app.pages;
 
+import app.Main;
+import app.classes.Contact;
 import app.env;
 
 import app.style.NoScalingIcon;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class SaveContact extends JFrame {
 
@@ -13,11 +19,46 @@ public class SaveContact extends JFrame {
         JPanel mainPanel = new JPanel(null);
         mainPanel.setBounds(0 ,0 , 480  ,720);
 
-        JPanel panelFullname = SaveDetailPanel.makePanel("Fullname", "alekyan", 311);
-        JPanel panelEmail = SaveDetailPanel.makePanel("email", "alekyan@gmail.com", 363);
-        JPanel panelMobile = SaveDetailPanel.makePanelMobile("mobile", "08123456789", 458);
-        JPanel panelAddress = SaveDetailPanel.makePanel("address", "Jl.Jogja", 510);
-        JPanel panelBirthday = SaveDetailPanel.makePanel("birthday", "12 Desember 2023", 562);
+        JPanel panelFullname = SaveDetailPanel.makePanel("full name", 311);
+        JPanel panelEmail = SaveDetailPanel.makePanel("email", 363);
+        JPanel panelMobile = SaveDetailPanel.makePanelMobile("mobile", 458);
+        JPanel panelAddress = SaveDetailPanel.makePanel("address", 510);
+        JPanel panelBirthday = SaveDetailPanel.makePanel("birthday", 562);
+
+        JTextField fullNameField = (JTextField) env.FindComponents(panelFullname, "fullName");
+        JTextField emailField = (JTextField) env.FindComponents(panelEmail, "email");
+        JTextField mobileField = (JTextField) env.FindComponents(panelMobile, "mobile");
+        JTextField addressField = (JTextField) env.FindComponents(panelAddress, "address");
+        JTextField birthdayField = (JTextField) env.FindComponents(panelBirthday, "birthday");
+
+        JLabel userProfileLabel = new JLabel(new NoScalingIcon(env.LoadImage("assets/user-circle-solid-240.png", 150, 150)));
+        userProfileLabel.setBounds(154 , 80, 185, 185);
+        mainPanel.add(userProfileLabel);
+
+        JLabel nameChar = new JLabel("", SwingConstants.CENTER);
+        nameChar.setFont(env.pixel36B);
+        nameChar.setBounds(32 , 30, 120, 120);
+        nameChar.setForeground(Color.decode(env.MAIN_COLOR));
+        userProfileLabel.add(nameChar);
+        fullNameField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (Character.isDigit(e.getKeyChar())) {
+                    e.consume();
+                }
+                else if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+                    if (fullNameField.getText().equals("")) {
+                        userProfileLabel.setIcon(new NoScalingIcon(env.LoadImage("assets/user-circle-solid-240.png", 150, 150)));
+                        nameChar.setText("");
+                    }
+                }else {
+                    if (!fullNameField.getText().equals("")) {
+                        userProfileLabel.setIcon(new NoScalingIcon(env.LoadImage("assets/user-profile-ellipse.png", 125, 125)));
+                        nameChar.setText(String.valueOf(fullNameField.getText().charAt(0)).toUpperCase());
+                    }
+                };
+            }
+        });
 
         //button
         JButton cancelButton = new JButton("Cancel");
@@ -38,10 +79,16 @@ public class SaveContact extends JFrame {
         cancelButton.addMouseListener(new env.CursorPointerStyle(cancelButton));
         doneButton.addMouseListener(new env.CursorPointerStyle(doneButton));
 
-        NoScalingIcon userProfile = new NoScalingIcon(env.LoadImage("assets/user-profile-ellipse.png", 150, 150));
-        JLabel userProfileLabel = new JLabel(userProfile);
-        userProfileLabel.setBounds(154 , 80, 185, 185);
-        mainPanel.add(userProfileLabel);
+
+        env.ActionListener(doneButton, (ActionEvent e) -> {
+            Contact newContact = new Contact(fullNameField.getText(), mobileField.getText(), emailField.getText(), addressField.getText(), birthdayField.getText());
+            env.tree.insertContact(newContact);
+
+            ContactListPage main = new ContactListPage(env.tree);
+            Main.mainFrame.dispose();
+            return null;
+        });
+
 
         mainPanel.add(panelFullname);
         mainPanel.add(panelEmail);
