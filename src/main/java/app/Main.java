@@ -4,13 +4,15 @@ import app.classes.Contact;
 import app.classes.TreeContact;
 import app.pages.ContactListPage;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Main {
+    public static JFrame mainFrame ;
     public static void main(String[] args) {
-        TreeContact tree = new TreeContact();
+        env.tree = new TreeContact();
 
         java.util.List<Contact> contacts = new ArrayList<>();
         contacts.add(new Contact("Jessica Turner", "+1 (555) 123-4567", "jessica.turner@email.com", "123 Main Street, Cityville, State, 12345", "January 15, 1985"));
@@ -20,9 +22,9 @@ public class Main {
         contacts.add(new Contact("David Smith", "+61 2 9876 5432", "david.smith@email.com.au", "234 Maple Road, Suburbia, Territory, 2000", "September 30, 1988"));
         
         for (Contact i : contacts) {
-            tree.insertContact(i);
+            env.tree.insertContact(i);
         }
-
-        ContactListPage frame = new ContactListPage(tree);
+        env.tree.inOrder(env.tree.getRoot());
+         mainFrame = new ContactListPage(env.tree);
     }
 }

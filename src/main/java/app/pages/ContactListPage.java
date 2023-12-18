@@ -60,8 +60,7 @@ public class ContactListPage extends JFrame{
 
 
     public static JPanel contactListsPanel (TreeContact tree){
-        tree.inOrder(tree.getRoot());
-        System.out.println(tree.size());
+
         JPanel mainPanel = new JPanel(null);
         mainPanel.setBackground(Color.decode(env.MAIN_COLOR));
         mainPanel.setBounds(0 ,0 , 480  ,720);
@@ -107,6 +106,7 @@ public class ContactListPage extends JFrame{
 
         //innerPanels
         for (int i = 0; i < env.contactList.size(); i++) {
+            final int index = i ;
             JPanel panel = new JPanel(null);
             panel.setPreferredSize(new Dimension(880 ,60));
             panel.setMaximumSize(new Dimension(880 , 60));
@@ -130,6 +130,16 @@ public class ContactListPage extends JFrame{
 
 
             if (i < env.contactList.size()-1) contacts.add(Box.createVerticalStrut(0));
+
+            env.MouseListener(panel , (MouseEvent e)->{
+                mainPanel.removeAll();
+                mainPanel.add(ContactDetail.ContactDetailPanel(env.contactList.get(index)));
+                mainPanel.repaint();
+                mainPanel.revalidate();
+                return null ;
+            });
+
+            panel.addMouseListener(new env.CursorPointerStyle(panel));
         }
 
 
