@@ -127,20 +127,18 @@ public class ContactListPage extends JFrame{
     }
 
     public JPanel bottomNav(){
-        JPanel nav = new JPanel(new GridLayout(0 , 2));
+        JPanel nav = new JPanel(new GridLayout(0 , 1));
         nav.setBounds(0, env.FRAME_HEIGHT-60, 480  ,60);
 
-        JButton contactBtn = new JButton(new NoScalingIcon(env.LoadImage("assets/user-blue.png" , 35 , 35)));
+        JLabel contactBtn = new JLabel(new NoScalingIcon(env.LoadImage("assets/user-blue.png" , 35 , 35)));
         contactBtn.setBackground(Color.decode(env.MAIN_COLOR));
         contactBtn.setFont(env.pixel12);
         contactBtn.setBorder(null);
-        JButton keypadBtn = new JButton(new NoScalingIcon(env.LoadImage("assets/keypad-black.png" , 35 , 35)));
-        keypadBtn.setBackground(Color.decode(env.MAIN_COLOR));
-        keypadBtn.setFont(env.pixel12);
-        keypadBtn.setBorder(null);
-
+//        JButton keypadBtn = new JButton(new NoScalingIcon(env.LoadImage("assets/keypad-black.png" , 35 , 35)));
+//        keypadBtn.setBackground(Color.decode(env.MAIN_COLOR));
+//        keypadBtn.setFont(env.pixel12);
+//        keypadBtn.setBorder(null);
         nav.add(contactBtn);
-        nav.add(keypadBtn);
         return nav;
     }
 }
