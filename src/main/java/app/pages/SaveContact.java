@@ -23,14 +23,14 @@ public class SaveContact extends JFrame {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setName("cancelBtn");
         cancelButton.setBounds(24, 17, 101, 24);
-        cancelButton.setFont(env.pixel18);
+        cancelButton.setFont(env.pixel20);
         cancelButton.setForeground(Color.decode(env.NICE_BLUE));
         cancelButton.setContentAreaFilled(false);
         cancelButton.setBorderPainted(false);
 
         JButton doneButton = new JButton("Done");
         doneButton.setBounds(358, 17, 101, 24);
-        doneButton.setFont(env.pixel18);
+        doneButton.setFont(env.pixel20);
         doneButton.setForeground(Color.decode(env.NICE_BLUE));
         doneButton.setContentAreaFilled(false);
         doneButton.setBorderPainted(false);
