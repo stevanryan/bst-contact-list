@@ -1,23 +1,24 @@
 package app.pages;
 
+import app.Main;
+import app.classes.Contact;
 import app.env;
 import app.style.NoScalingIcon;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.util.InputMismatchException;
 
 public class ContactDetail extends JFrame {
 
-    public ContactDetail() {
+    public static JPanel ContactDetailPanel(Contact contact) {
         // Panel
         JPanel panel = new JPanel();
         panel.setLayout(null);
+        panel.setBounds(0 ,0 , 480  ,720);
 
         // Icon
-        JLabel userLetterName = new JLabel("T", SwingConstants.CENTER);
+        JLabel userLetterName = new JLabel(String.valueOf(contact.getFullName().toUpperCase().charAt(0)), SwingConstants.CENTER);
         userLetterName.setFont(env.pixel36B);
         userLetterName.setForeground(Color.decode(env.MAIN_COLOR));
         userLetterName.setBounds(160, 38, 150, 150);
@@ -28,17 +29,19 @@ public class ContactDetail extends JFrame {
         backLabel.setBounds(10, 10, 48, 48);
         panel.add(backLabel);
 
+
+
         NoScalingIcon userProfile = new NoScalingIcon(env.LoadImage("assets/user-profile-ellipse.png", 150, 150));
         JLabel userProfileLabel = new JLabel(userProfile);
         userProfileLabel.setBounds(160, 40, 150, 150);
         panel.add(userProfileLabel);
 
         // Adding
-        JPanel fullNamePanel = makePanel("full name", "Tom Cruise");
-        JPanel phoneNumberPanel = makePanel("phone number", "+621382639825");
-        JPanel emailPanel = makePanel("email", "tcruist@gmail.com");
-        JPanel addressPanel = makePanel("address", "123 Main Street Anytown, CA 12345 USA");
-        JPanel birthDatePanel = makePanel("birth date", "July 3, 1962");
+        JPanel fullNamePanel = makePanel("full name", contact.getFullName());
+        JPanel phoneNumberPanel = makePanel("phone number", contact.getPhoneNumber());
+        JPanel emailPanel = makePanel("email", contact.getEmail());
+        JPanel addressPanel = makePanel("address", contact.getAddress());
+        JPanel birthDatePanel = makePanel("birth date", contact.getBirthDate());
 
         fullNamePanel.setBounds(20, 210, 440, 64);
         phoneNumberPanel.setBounds(20, 290, 440, 64);
@@ -54,20 +57,14 @@ public class ContactDetail extends JFrame {
 
         // Event
         env.MouseListener(backLabel, (MouseEvent e) -> {
-            System.exit(0);
+            ContactListPage main = new ContactListPage(env.tree);
+            Main.mainFrame.dispose();
             return null;
         });
 
         backLabel.addMouseListener(new env.CursorPointerStyle(backLabel));
 
-        // Settings
-        setBackground(Color.decode(env.SUPER_LIGHT_GRAY));
-        setSize(env.FRAME_WIDTH,env.FRAME_HEIGHT);
-        setContentPane(panel);
-        setResizable(false);
-        setUndecorated(true);
-        setLocation(env.WINDOW_POST_X, env.WINDOW_POST_Y);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+      return panel ;
     }
 
     public static JPanel makePanel(String title, String dataValue) {
@@ -90,8 +87,9 @@ public class ContactDetail extends JFrame {
         return panel;
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         ContactDetail contactDetail = new ContactDetail();
         contactDetail.setVisible(true);
+
     }
 }
