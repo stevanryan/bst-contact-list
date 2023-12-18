@@ -14,6 +14,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactListPage extends JFrame{
@@ -124,9 +125,10 @@ public class ContactListPage extends JFrame{
             }
         });
 
-
+        env.tree.inOrder(env.tree.getRoot());
         //innerPanels
         innerPanels(contacts , env.contactList);
+
 
 
         JScrollPane scrollPane = new JScrollPane(contacts);
@@ -170,43 +172,58 @@ public class ContactListPage extends JFrame{
         return mainPanel;
     }
 
+public static void innerPanels (JPanel contacts , List<Contact> contactList){
 
-    public static void innerPanels (JPanel contacts , List<Contact> contactList){
-        for (int i = 0; i < contactList.size(); i++) {
-            final int index = i ;
-            JPanel panel = new JPanel(null);
-            panel.setPreferredSize(new Dimension(880 ,60));
-            panel.setMaximumSize(new Dimension(880 , 60));
-            panel.setBackground(Color.decode(env.NICE_GRAY));
-            contacts.add(panel);
+    contactList.sort(Comparator.comparing(Contact::getFullName));
 
-            JLabel name = new JLabel(contactList.get(i).getFullName());
-            name.setBounds(10 , 12 , 200 , 32);
-            name.setFont(env.pixel18);
+    char currentChar = ' ';
 
-            Border customBorder = BorderFactory.createMatteBorder(1, 0, 0, 0, Color.decode(env.DARK_COLOR));
-            panel.setBorder(customBorder);
+    for (int i = 0; i < contactList.size(); i++) {
+        final int index = i ;
+        JPanel panel = new JPanel(null);
+        panel.setPreferredSize(new Dimension(880 ,60));
+        panel.setMaximumSize(new Dimension(880 , 60));
+        panel.setBackground(Color.decode(env.NICE_GRAY));
 
-            Border customBorderTwo = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode(env.DARK_COLOR));
+        String fullName = contactList.get(i).getFullName();
+        JLabel name = new JLabel(fullName);
+        name.setBounds(10 , 12 , 200 , 32);
+        name.setFont(env.pixel18);
 
-            if ((i + 1) == contactList.size()) {
-                panel.setBorder(customBorderTwo);
-            }
-            panel.add(name);
 
-            if (i < contactList.size()-1) contacts.add(Box.createVerticalStrut(0));
+        if (fullName.charAt(0) != currentChar) {
+            currentChar = fullName.charAt(0);
 
-            env.MouseListener(panel , (MouseEvent e)->{
-                mainPanel.removeAll();
-                mainPanel.add(ContactDetail.ContactDetailPanel(contactList.get(index)));
-                mainPanel.repaint();
-                mainPanel.revalidate();
-                return null ;
-            });
 
-            panel.addMouseListener(new env.CursorPointerStyle(panel));
+            JLabel charLabel = new JLabel(String.valueOf(currentChar));
+            charLabel.setFont(env.pixel9);
+            charLabel.setForeground(Color.decode(env.DARK_COLOR));
+            contacts.add(charLabel);
         }
+
+        Border customBorder = BorderFactory.createMatteBorder(1, 0, 0, 0, Color.decode(env.DARK_COLOR));
+        panel.setBorder(customBorder);
+
+        Border customBorderTwo = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode(env.DARK_COLOR));
+
+        if ((i + 1) == contactList.size()) {
+            panel.setBorder(customBorderTwo);
+        }
+        panel.add(name);
+
+        if (i < contactList.size()-1) contacts.add(Box.createVerticalStrut(0));
+
+        env.MouseListener(panel , (MouseEvent e)->{
+            mainPanel.removeAll();
+            mainPanel.add(ContactDetail.ContactDetailPanel(contactList.get(index)));
+            mainPanel.repaint();
+            mainPanel.revalidate();
+            return null ;
+        });
+        panel.addMouseListener(new env.CursorPointerStyle(panel));
+        contacts.add(panel);
     }
+}
     public static JPanel bottomNav(){
         JPanel nav = new JPanel(new GridLayout(0 , 1));
         nav.setBounds(0, env.FRAME_HEIGHT-60, 480  ,60);
