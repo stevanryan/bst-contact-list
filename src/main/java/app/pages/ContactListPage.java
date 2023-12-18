@@ -1,9 +1,11 @@
 package app.pages;
 
+import app.classes.TreeContact;
 import app.env;
 import app.pages.ContactDetail;
 import app.style.NoScalingIcon;
 import app.style.RoundedBorder;
+import com.sun.source.tree.Tree;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -17,12 +19,9 @@ import java.awt.event.MouseEvent;
 public class ContactListPage extends JFrame{
     public static JPanel mainPanel ;
 
-    public static void main(String[] args) {
-        ContactListPage main = new ContactListPage();
-    }
 
-    public ContactListPage(){
-        JPanel contactListPanel = contactListsPanel();
+    public ContactListPage(TreeContact tree){
+        JPanel contactListPanel = contactListsPanel(tree);
         JPanel saveContactPanel = SaveContact.SaveContactPanel();
         mainPanel = new JPanel(null);
         mainPanel.add(contactListPanel);
@@ -57,7 +56,7 @@ public class ContactListPage extends JFrame{
     }
 
 
-    public static JPanel contactListsPanel (){
+    public static JPanel contactListsPanel (TreeContact tree){
         JPanel mainPanel = new JPanel(null);
         mainPanel.setBackground(Color.decode(env.MAIN_COLOR));
         mainPanel.setBounds(0 ,0 , 480  ,720);
@@ -101,14 +100,14 @@ public class ContactListPage extends JFrame{
 
 
         //innerPanels
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < tree.getSize(); i++) {
             JPanel panel = new JPanel(null);
             panel.setPreferredSize(new Dimension(880 ,60));
             panel.setMaximumSize(new Dimension(880 , 60));
             panel.setBackground(Color.decode(env.NICE_BLUE));
             contacts.add(panel);
 
-            if (i < 19) contacts.add(Box.createVerticalStrut(5));
+            if (i < tree.getSize()-1) contacts.add(Box.createVerticalStrut(5));
         }
 
 
