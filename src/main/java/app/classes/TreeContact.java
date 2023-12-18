@@ -68,9 +68,13 @@ public class TreeContact {
 
 
     public void inOrder(TreeNodeContact treeNode) {
+        if (treeNode == root) {
+            env.contactList.clear();
+        }
         if (treeNode != null) {
             inOrder(treeNode.getLeftNode());
             env.contactList.add(treeNode.getValue());
+            System.out.println(treeNode.getValue().getFullName());
             inOrder(treeNode.getRightNode());
         }
     }
@@ -78,45 +82,61 @@ public class TreeContact {
     public boolean delete(String value) {
         TreeNodeContact parent = root;
         TreeNodeContact temp = root;
+        boolean isLeftChild = false;
 
-        int index = 0;
-        while (temp != null) {
-            if (temp.getValue().getFullName().charAt(index) < value.charAt(index)) {
-                parent = temp;
-                temp = temp.getRightNode();
-            } else if (temp.getValue().getFullName().charAt(index) > value.charAt(index)) {
-                parent = temp;
+        while (!temp.getValue().getFullName().equals(value)) {
+            parent = temp;
+            if (temp.getValue().getFullName().compareTo(value) > 0) {
+                isLeftChild = true;
                 temp = temp.getLeftNode();
-            } else {
-                if (temp.getLeftNode() == null && temp.getRightNode() == null) {
-                    if (temp == root) {
-                        root = null;
-                        size--;
-                        return true;
-                    } else if (parent.getLeftNode() == temp) parent.setLeftNode(null);
-                    else parent.setRightNode(null);
-                } else if (temp.getLeftNode() == null && temp.getRightNode() != null) {
-                    if (temp == root) root = temp.getRightNode();
-                    else if (parent.getRightNode() == temp) parent.setRightNode(temp.getRightNode());
-                    else parent.setLeftNode(temp.getRightNode());
-
-                } else if (temp.getLeftNode() != null && temp.getRightNode() == null) {
-                    if (temp == root) root = temp.getLeftNode();
-                    else if (parent.getRightNode() == temp) parent.setRightNode(temp.getLeftNode());
-                    else parent.setLeftNode(temp.getLeftNode());
-                } else {
-                    TreeNodeContact successor = findSuccessor(temp);
-                    delete(successor.getValue().getFullName());
-                    temp.setValue(successor.getValue());
-                    size--;
-                }
-                size--;
-                return true;
+            } else if (temp.getValue().getFullName().compareTo(value) < 0) {
+                isLeftChild = false;
+                temp = temp.getRightNode();
             }
-            index++;
+            if (temp == null) {
+                return false;
+            }
         }
-        return false;
+
+        if (temp.getLeftNode() == null && temp.getRightNode() == null) {
+            if (temp == root) {
+                root = null;
+            } else if (isLeftChild) {
+                parent.setLeftNode(null);
+            } else {
+                parent.setRightNode(null);
+            }
+        } else if (temp.getRightNode() == null) {
+            if (temp == root) {
+                root = temp.getLeftNode();
+            } else if (isLeftChild) {
+                parent.setLeftNode(temp.getLeftNode());
+            } else {
+                parent.setRightNode(temp.getLeftNode());
+            }
+        } else if (temp.getLeftNode() == null) {
+            if (temp == root) {
+                root = temp.getRightNode();
+            } else if (isLeftChild) {
+                parent.setLeftNode(temp.getRightNode());
+            } else {
+                parent.setRightNode(temp.getRightNode());
+            }
+        } else {
+            TreeNodeContact successor = findSuccessor(temp);
+            if (temp == root) {
+                root = successor;
+            } else if (isLeftChild) {
+                parent.setLeftNode(successor);
+            } else {
+                parent.setRightNode(successor);
+            }
+            successor.setLeftNode(temp.getLeftNode());
+        }
+        size--;
+        return true;
     }
+
 
     public TreeNodeContact findSuccessor(TreeNodeContact data) {
         data = data.getRightNode();

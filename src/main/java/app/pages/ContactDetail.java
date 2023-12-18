@@ -139,16 +139,17 @@ public class ContactDetail extends JFrame {
         });
 
         env.ActionListener(saveButton, (ActionEvent e) -> {
-
+            String oldName = contact.getFullName();
+            env.tree.delete(oldName);
             contact.setFullName(fullNameField.getText());
             contact.setPhoneNumber(phoneNumberField.getText());
             contact.setEmail(emailField.getText());
             contact.setAddress(addressField.getText());
             contact.setBirthDate(birthdateField.getText());
-
+            env.tree.insertContact(contact);
+            env.tree.inOrder(env.tree.getRoot());
             ContactListPage main = new ContactListPage();
             Main.mainFrame.dispose();
-
             return null;
         });
 
