@@ -50,16 +50,22 @@ public class TreeContact {
         }
     }
 
-    public boolean search(String value) {
-        TreeNodeContact i = root;
-        int index = 0;
-        while (i != null) {
-            if (i.getValue().getFullName().equalsIgnoreCase(value)) return true;
-            else if (i.getValue().getFullName().charAt(index) > value.charAt(index)) i = i.getRightNode();
-            else i = i.getLeftNode();
-        }
-        return false;
+    public List<Contact> search(String value) {
+        return searchHelper(env.tree.getRoot(), value.toLowerCase());
     }
+
+    private List<Contact> searchHelper(TreeNodeContact node, String value) {
+        List<Contact> foundContact = new ArrayList<>();
+        if (node != null) {
+            if (node.getValue().getFullName().toLowerCase().contains(value)) {
+                foundContact.add(node.getValue());
+            }
+            foundContact.addAll(searchHelper(node.getLeftNode(), value));
+            foundContact.addAll(searchHelper(node.getRightNode(), value));
+        }
+        return foundContact;
+    }
+
 
     public void inOrder(TreeNodeContact treeNode) {
         if (treeNode != null) {

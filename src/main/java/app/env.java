@@ -23,6 +23,7 @@ public class env {
     public static final String TOPBAR_COLOR = "#1f1f1f";
     public static final String NICE_RED = "#FF385C";
     public static final String NICE_BLUE = "#2E87EF";
+    public static final String NICE_GREEN = "#21BF73";
     public static final String NICE_GRAY = "#F3F2F7";
     public static final String SUPER_LIGHT_GRAY = "#F3F2F7";
     public static final String BORDER_GRAY = "#EAE9EE";
