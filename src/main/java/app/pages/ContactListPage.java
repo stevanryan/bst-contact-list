@@ -23,8 +23,8 @@ public class ContactListPage extends JFrame{
     public static JPanel mainPanel ;
 
 
-    public ContactListPage(TreeContact tree){
-        JPanel contactListPanel = contactListsPanel(tree);
+    public ContactListPage(){
+        JPanel contactListPanel = contactListsPanel();
         JPanel saveContactPanel = SaveContact.SaveContactPanel();
         mainPanel = new JPanel(null);
         mainPanel.add(contactListPanel);
@@ -59,7 +59,7 @@ public class ContactListPage extends JFrame{
     }
 
 
-    public static JPanel contactListsPanel (TreeContact tree){
+    public static JPanel contactListsPanel (){
 
         JPanel mainPanel = new JPanel(null);
         mainPanel.setBackground(Color.decode(env.MAIN_COLOR));
