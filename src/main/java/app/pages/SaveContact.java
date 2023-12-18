@@ -22,18 +22,21 @@ public class SaveContact extends JFrame {
         //button
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setName("cancelBtn");
-        cancelButton.setBounds(24, 17, 101, 24);
-        cancelButton.setFont(env.pixel20);
+        cancelButton.setBounds(0, 30, 101, 24);
+        cancelButton.setFont(env.pixel18);
         cancelButton.setForeground(Color.decode(env.NICE_BLUE));
         cancelButton.setContentAreaFilled(false);
         cancelButton.setBorderPainted(false);
 
         JButton doneButton = new JButton("Done");
-        doneButton.setBounds(358, 17, 101, 24);
-        doneButton.setFont(env.pixel20);
+        doneButton.setBounds(385, 30, 101, 24);
+        doneButton.setFont(env.pixel18);
         doneButton.setForeground(Color.decode(env.NICE_BLUE));
         doneButton.setContentAreaFilled(false);
         doneButton.setBorderPainted(false);
+
+        cancelButton.addMouseListener(new env.CursorPointerStyle(cancelButton));
+        doneButton.addMouseListener(new env.CursorPointerStyle(doneButton));
 
         NoScalingIcon userProfile = new NoScalingIcon(env.LoadImage("assets/user-profile-ellipse.png", 150, 150));
         JLabel userProfileLabel = new JLabel(userProfile);
