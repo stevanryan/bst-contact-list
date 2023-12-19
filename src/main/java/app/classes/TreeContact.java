@@ -74,7 +74,6 @@ public class TreeContact {
         if (treeNode != null) {
             inOrder(treeNode.getLeftNode());
             env.contactList.add(treeNode.getValue());
-            System.out.println(treeNode.getValue().getFullName());
             inOrder(treeNode.getRightNode());
         }
     }
