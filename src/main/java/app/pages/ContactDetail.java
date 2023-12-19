@@ -175,17 +175,16 @@ public class ContactDetail extends JFrame {
             contact.setBirthDate(birthdateField.getText());
             env.tree.insertContact(contact);
             env.tree.inOrder(env.tree.getRoot());
-            ContactListPage main = new ContactListPage();
             Main.mainFrame.dispose();
+            Main.mainFrame = new ContactListPage();
             return null;
         });
 
         env.ActionListener(deleteButton, (ActionEvent e) -> {
             String fullName = contact.getFullName();
             env.tree.delete(fullName);
-                ContactListPage main = new ContactListPage();
-                Main.mainFrame.dispose();
-
+            Main.mainFrame.dispose();
+            Main.mainFrame = new ContactListPage();
             return null;
         });
 
@@ -196,8 +195,8 @@ public class ContactDetail extends JFrame {
 
         // Event
         env.MouseListener(backLabel, (MouseEvent e) -> {
-            ContactListPage main = new ContactListPage();
             Main.mainFrame.dispose();
+            Main.mainFrame = new ContactListPage();
             return null;
         });
 

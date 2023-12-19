@@ -103,10 +103,9 @@ public class SaveContact extends JFrame {
 
                     env.tree.insertContact(newContact);
 
-                    ContactListPage main = new ContactListPage();
                     Main.mainFrame.dispose();
-                    Main.mainFrame.repaint();
-                    Main.mainFrame.revalidate();
+                    Main.mainFrame = new ContactListPage();
+
                 } catch (IllegalArgumentException | InputMismatchException err) {
                     errorInformationLabel.setText(err.getMessage());
                     Timer timer = new Timer(1000, (ActionEvent evt) -> {
