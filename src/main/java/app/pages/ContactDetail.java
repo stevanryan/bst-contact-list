@@ -153,6 +153,15 @@ public class ContactDetail extends JFrame {
             return null;
         });
 
+        env.ActionListener(deleteButton, (ActionEvent e) -> {
+            String fullName = contact.getFullName();
+            if (env.tree.delete(fullName)) {
+                ContactListPage main = new ContactListPage();
+                Main.mainFrame.dispose();
+            } else {
+            }
+            return null;
+        });
 
         panel.add(updateButton);
         panel.add(deleteButton);
