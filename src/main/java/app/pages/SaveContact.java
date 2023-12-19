@@ -24,9 +24,7 @@ public class SaveContact extends JFrame {
         JPanel panelMobile = SaveDetailPanel.makePanelMobile("mobile", 458);
         JPanel panelAddress = SaveDetailPanel.makePanel("address", 510);
         JPanel panelBirthday = SaveDetailPanel.makePanel("birthday", 562);
-        JTextField contentValue = new JTextField();
-        contentValue.setName("mobile"); // Pastikan nama ini sesuai dengan yang Anda cari nanti
-
+        
         JTextField fullNameField = (JTextField) env.FindComponents(panelFullname, "fullName");
         JTextField emailField = (JTextField) env.FindComponents(panelEmail, "email");
         JTextField mobileField = (JTextField) env.FindComponents(panelMobile, "mobile");
