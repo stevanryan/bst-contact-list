@@ -24,7 +24,7 @@ public class SaveContact extends JFrame {
         JPanel panelMobile = SaveDetailPanel.makePanelMobile("mobile", 458);
         JPanel panelAddress = SaveDetailPanel.makePanel("address", 510);
         JPanel panelBirthday = SaveDetailPanel.makePanel("birthday", 562);
-
+        
         JTextField fullNameField = (JTextField) env.FindComponents(panelFullname, "fullName");
         JTextField emailField = (JTextField) env.FindComponents(panelEmail, "email");
         JTextField mobileField = (JTextField) env.FindComponents(panelMobile, "mobile");
@@ -79,14 +79,22 @@ public class SaveContact extends JFrame {
         cancelButton.addMouseListener(new env.CursorPointerStyle(cancelButton));
         doneButton.addMouseListener(new env.CursorPointerStyle(doneButton));
 
+        doneButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fullName = fullNameField.getText();
+                String email = emailField.getText();
+                String mobile = mobileField.getText();
+                String address = addressField.getText();
+                String birthday = birthdayField.getText();
 
-        env.ActionListener(doneButton, (ActionEvent e) -> {
-            Contact newContact = new Contact(fullNameField.getText(), mobileField.getText(), emailField.getText(), addressField.getText(), birthdayField.getText());
-            env.tree.insertContact(newContact);
+                Contact newContact = new Contact(fullName, mobile, email, address, birthday);
 
-            ContactListPage main = new ContactListPage();
-            Main.mainFrame.dispose();
-            return null;
+                env.tree.insertContact(newContact);
+
+                ContactListPage main = new ContactListPage();
+                Main.mainFrame.dispose();
+            }
         });
 
 
