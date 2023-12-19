@@ -63,6 +63,7 @@ public class SaveDetailPanel {
 
         // value label
         JTextField contentValue = new JTextField();
+        contentValue.setName("mobile");
         contentValue.setBackground(Color.decode(env.MAIN_COLOR));
         contentValue.setForeground(Color.decode(env.NICE_BLUE));
         contentValue.setBorder(null);
