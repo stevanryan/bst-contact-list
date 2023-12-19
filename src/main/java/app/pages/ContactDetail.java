@@ -6,8 +6,10 @@ import app.env;
 import app.style.NoScalingIcon;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.InputMismatchException;
 
 public class ContactDetail extends JFrame {
 
@@ -92,6 +94,11 @@ public class ContactDetail extends JFrame {
         saveButton.setBounds(244, 650, 215, 32);
         saveButton.setVisible(false);
 
+        updateButton.addMouseListener(new env.CursorPointerStyle(updateButton));
+        cancelButton.addMouseListener(new env.CursorPointerStyle(cancelButton));
+        deleteButton.addMouseListener(new env.CursorPointerStyle(deleteButton));
+        saveButton.addMouseListener(new env.CursorPointerStyle(saveButton));
+
         env.ActionListener(updateButton, (ActionEvent e) -> {
             updateButton.setVisible(false);
             deleteButton.setVisible(false);
@@ -99,7 +106,27 @@ public class ContactDetail extends JFrame {
             cancelButton.setVisible(true);
 
             fullNameField.setEditable(true);
+
+            fullNameField.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if (Character.isDigit(e.getKeyChar())) {
+                        e.consume();
+                    }
+                }
+            });
+
             phoneNumberField.setEditable(true);
+
+            phoneNumberField.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar())) {
+                        e.consume();
+                    }
+                }
+            });
+
             emailField.setEditable(true);
             addressField.setEditable(true);
             birthdateField.setEditable(true);

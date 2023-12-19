@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.InputMismatchException;
 
 public class SaveContact extends JFrame {
 
@@ -79,21 +80,41 @@ public class SaveContact extends JFrame {
         cancelButton.addMouseListener(new env.CursorPointerStyle(cancelButton));
         doneButton.addMouseListener(new env.CursorPointerStyle(doneButton));
 
+        JLabel errorInformationLabel = new JLabel("", SwingConstants.CENTER);
+        errorInformationLabel.setFont(env.pixel10);
+        errorInformationLabel.setForeground(Color.decode(env.NICE_RED));
+        errorInformationLabel.setBounds(20, 624, 440, 24);
+        mainPanel.add(errorInformationLabel);
+
         doneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String fullName = fullNameField.getText();
-                String email = emailField.getText();
-                String mobile = mobileField.getText();
-                String address = addressField.getText();
-                String birthday = birthdayField.getText();
+                try {
+                    checkIsEmpty(fullNameField.getText());
+                    checkIsEmpty(mobileField.getText());
 
-                Contact newContact = new Contact(fullName, mobile, email, address, birthday);
+                    String fullName = fullNameField.getText();
+                    String email = emailField.getText();
+                    String mobile = "+62" + mobileField.getText();
+                    String address = addressField.getText();
+                    String birthday = birthdayField.getText();
 
-                env.tree.insertContact(newContact);
+                    Contact newContact = new Contact(fullName, mobile, email, address, birthday);
 
-                ContactListPage main = new ContactListPage();
-                Main.mainFrame.dispose();
+                    env.tree.insertContact(newContact);
+
+                    ContactListPage main = new ContactListPage();
+                    Main.mainFrame.dispose();
+                    Main.mainFrame.repaint();
+                    Main.mainFrame.revalidate();
+                } catch (IllegalArgumentException | InputMismatchException err) {
+                    errorInformationLabel.setText(err.getMessage());
+                    Timer timer = new Timer(1000, (ActionEvent evt) -> {
+                        errorInformationLabel.setText("");
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                }
             }
         });
 
@@ -114,4 +135,9 @@ public class SaveContact extends JFrame {
         return mainPanel;
     }
 
+    public static void checkIsEmpty(String val){
+        if (val.equals("")) {
+            throw new InputMismatchException("full name dan phone number must be filled!");
+        }
+    }
 }
