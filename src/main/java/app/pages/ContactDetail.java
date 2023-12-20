@@ -183,6 +183,7 @@ public class ContactDetail extends JFrame {
         env.ActionListener(deleteButton, (ActionEvent e) -> {
             String fullName = contact.getFullName();
             env.tree.delete(fullName);
+            env.tree.inOrder(env.tree.getRoot());
             Main.mainFrame.dispose();
             Main.mainFrame = new ContactListPage();
             return null;

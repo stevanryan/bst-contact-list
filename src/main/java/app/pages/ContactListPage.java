@@ -174,7 +174,8 @@ public class ContactListPage extends JFrame{
 
 public static void innerPanels (JPanel contacts , List<Contact> contactList){
 
-    contactList.sort(Comparator.comparing(Contact::getFullName));
+//    contactList.sort(Comparator.comparing(Contact::getFullName));
+    env.tree.inOrder(env.tree.getRoot());
 
     char currentChar = ' ';
 
@@ -191,9 +192,8 @@ public static void innerPanels (JPanel contacts , List<Contact> contactList){
         name.setFont(env.pixel18);
 
 
-        if (fullName.charAt(0) != currentChar) {
-            currentChar = fullName.charAt(0);
-
+        if (fullName.toUpperCase().charAt(0) != currentChar) {
+            currentChar = fullName.toUpperCase().charAt(0);
 
             JLabel charLabel = new JLabel(String.valueOf(currentChar));
             charLabel.setFont(env.pixel9);
