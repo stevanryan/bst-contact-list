@@ -135,7 +135,7 @@ public class SaveContact extends JFrame {
 
     public static void checkIsEmpty(String val){
         if (val.equals("")) {
-            throw new InputMismatchException("full name dan phone number must be filled!");
+            throw new InputMismatchException("full name and phone number must be filled!");
         }
     }
 }
