@@ -174,7 +174,6 @@ public class ContactDetail extends JFrame {
             contact.setAddress(addressField.getText());
             contact.setBirthDate(birthdateField.getText());
             env.tree.insertContact(contact);
-            env.tree.inOrder(env.tree.getRoot());
             Main.mainFrame.dispose();
             Main.mainFrame = new ContactListPage();
             return null;
@@ -182,10 +181,12 @@ public class ContactDetail extends JFrame {
 
         env.ActionListener(deleteButton, (ActionEvent e) -> {
             String fullName = contact.getFullName();
-            env.tree.delete(fullName);
-            env.tree.inOrder(env.tree.getRoot());
-            Main.mainFrame.dispose();
-            Main.mainFrame = new ContactListPage();
+            if ( env.tree.delete(fullName)){
+                env.tree.inOrder(env.tree.getRoot());
+                System.out.println("DELETED");
+                Main.mainFrame.dispose();
+                Main.mainFrame = new ContactListPage();
+            }else System.out.println("NOT FOUND");
             return null;
         });
 

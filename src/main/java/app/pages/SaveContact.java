@@ -98,7 +98,6 @@ public class SaveContact extends JFrame {
                     String mobile = "+62" + mobileField.getText();
                     String address = addressField.getText();
                     String birthday = birthdayField.getText();
-
                     Contact newContact = new Contact(fullName, mobile, email, address, birthday);
 
                     env.tree.insertContact(newContact);

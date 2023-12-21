@@ -32,7 +32,7 @@ public class Main {
         contacts.add(new Contact("Sophia Johnson", "+62813 8126 9562", "sophia.johnson@example.com", "8901 Pine Road, Suite 567, Hillside, CA 98765", "1986-11-29"));
         contacts.add(new Contact("Liam Brown", "+62813 9164 6146", "liam.brown@example.co.uk", "1234 Cedar Crescent, Room 890, South Town, NW1 2EF", "1979-04-24"));
         contacts.add(new Contact("Mia Taylor", "+62813 5162 7591", "mia.taylor@example.es", "5678 Oak Lane, Apt 123, North Village, 28001 Madrid", "1994-08-07"));
-        
+
         for (Contact i : contacts) {
             env.tree.insertContact(i);
         }

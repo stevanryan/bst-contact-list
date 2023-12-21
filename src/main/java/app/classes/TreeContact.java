@@ -83,12 +83,12 @@ public class TreeContact {
         TreeNodeContact temp = root;
         boolean isLeftChild = false;
 
-        while (!temp.getValue().getFullName().equals(value)) {
+        while (!temp.getValue().getFullName().toLowerCase().equals(value.toLowerCase())) {
             parent = temp;
-            if (temp.getValue().getFullName().compareTo(value) > 0) {
+            if (temp.getValue().getFullName().toLowerCase().compareTo(value.toLowerCase()) > 0) {
                 isLeftChild = true;
                 temp = temp.getLeftNode();
-            } else if (temp.getValue().getFullName().compareTo(value) < 0) {
+            } else if (temp.getValue().getFullName().toLowerCase().compareTo(value.toLowerCase()) < 0) {
                 isLeftChild = false;
                 temp = temp.getRightNode();
             }
