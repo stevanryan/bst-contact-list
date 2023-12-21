@@ -98,7 +98,6 @@ public class SaveContact extends JFrame {
                     String mobile = "+62" + mobileField.getText();
                     String address = addressField.getText();
                     String birthday = birthdayField.getText();
-
                     Contact newContact = new Contact(fullName, mobile, email, address, birthday);
 
                     env.tree.insertContact(newContact);
@@ -136,7 +135,7 @@ public class SaveContact extends JFrame {
 
     public static void checkIsEmpty(String val){
         if (val.equals("")) {
-            throw new InputMismatchException("full name dan phone number must be filled!");
+            throw new InputMismatchException("full name and phone number must be filled!");
         }
     }
 }
